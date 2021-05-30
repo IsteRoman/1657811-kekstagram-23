@@ -12,12 +12,13 @@ const gettingValue = function(minValue, maxValue) {
 
 gettingValue();
 
-const MAX_COMMENT_LENGHT = 140;
+const checkLenght = function (string, maxStringLenght) {
+  return string.length <= maxStringLenght;
+}
 
-const checkLenght = function (commentField) {
-  if (commentField >= MAX_COMMENT_LENGHT) {
-    return false;
-  }
-};
+const a = checkLenght('new function', 5)
+const b = checkLenght('new', 5)
+const c = checkLenght('alpha', 4)
 
-checkLenght();
+document.write('A: ' + a + ' B: ' + b + ' c: ' + c)
+
