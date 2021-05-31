@@ -16,8 +16,4 @@ const checkLenght = function (string, maxStringLenght) {
   return string.length <= maxStringLenght;
 };
 
-const ad = checkLenght('new function', 5);
-const ba = checkLenght('new', 5);
-const ca = checkLenght('alpha', 4);
-
-document.write('A: ' + ad + ' B: ' + ba + ' c: ' + ca); // eslint-disable-line
+checkLenght();
