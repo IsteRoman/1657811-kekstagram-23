@@ -12,12 +12,12 @@ const gettingValue = function(minValue, maxValue) {
 
 gettingValue();
 
-const MAX_COMMENT_LENGHT = 140;
-
-const checkLenght = function (commentField) {
-  if (commentField >= MAX_COMMENT_LENGHT) {
-    return false;
-  }
+const checkLenght = function (string, maxStringLenght) {
+  return string.length <= maxStringLenght;
 };
 
-checkLenght();
+const ad = checkLenght('new function', 5);
+const ba = checkLenght('new', 5);
+const ca = checkLenght('alpha', 4);
+
+document.write('A: ' + ad + ' B: ' + ba + ' c: ' + ca); // eslint-disable-line
