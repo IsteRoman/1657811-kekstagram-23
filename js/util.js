@@ -21,16 +21,16 @@ const randomValueNoRepeat = (min, max) => {
   };
 };
 
-const randomValueNoRepeatArray1 = randomValueNoRepeat(1, 25);
-const randomValueNoRepeatArray2 = randomValueNoRepeat(1, 25);
-const randomValueNoRepeatArray3 = randomValueNoRepeat(1, 25);
+const randomValueForCommentId = randomValueNoRepeat(1, 25);
+const randomValueForUserId = randomValueNoRepeat(1, 25);
+const randomValueForUserUrl = randomValueNoRepeat(1, 25);
 
 const getRandomArrayElement = (elements) => { // eslint-disable-line
   return elements[gettingValue(0, elements.length - 1)]; // eslint-disable-line
 }; // eslint-disable-line
 
 export {gettingValue};
-export {randomValueNoRepeatArray1};
-export {randomValueNoRepeatArray2};
-export {randomValueNoRepeatArray3};
+export {randomValueForCommentId};
+export {randomValueForUserId};
+export {randomValueForUserUrl};
 export {getRandomArrayElement};
