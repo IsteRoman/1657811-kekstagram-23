@@ -7,11 +7,11 @@ const showMiniature = function() {
 
   const photoListElement = document.createDocumentFragment();
 
-  miniatureData.forEach(({userUrl, userLikes, userCommentLenght}) => {
+  miniatureData.forEach(({userUrl, userLikes}) => {
     const miniPhoto = pictureTemplate.cloneNode(true);
     miniPhoto.querySelector('.picture__img').setAttribute('src', userUrl);
     miniPhoto.querySelector('.picture__likes').textContent = userLikes;
-    miniPhoto.querySelector('.picture__comments').textContent = userCommentLenght;
+    miniPhoto.querySelector('.picture__comments').textContent = 1;
     photoListElement.appendChild(miniPhoto);
   });
 
