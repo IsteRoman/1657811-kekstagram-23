@@ -1,3 +1,3 @@
-import {photoBlocks} from './data.js';
+import {showMiniature} from './miniature.js';
 
-photoBlocks();
+showMiniature();
