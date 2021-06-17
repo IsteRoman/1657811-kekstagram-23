@@ -47,7 +47,7 @@ const craeteComments = function() {
   };
 };
 
-const commentBlocks = () => new Array(gettingValue(1, 6)).fill(null).map(() => craeteComments());
+const commentArray = () => new Array(gettingValue(1, 3)).fill(null).map(() => craeteComments());
 
 const createPhotoBlock = function() {
   return {
@@ -55,11 +55,11 @@ const createPhotoBlock = function() {
     userUrl: `photos/${randomValueForUserUrl()}.jpg`,
     userDescription: getRandomArrayElement(PHOTO_DISCRIPTION),
     userLikes: gettingValue(15, 200),
-    userComment: getRandomArrayElement(commentBlocks),
+    userComment: getRandomArrayElement(commentArray),
   };
 };
 
 const photoBlocks = () => new Array(NUMBER_OF_PHOTO_BLOCKS).fill(null).map(() => createPhotoBlock());
 
-export {createPhotoBlock};
+export {commentArray};
 export {photoBlocks};

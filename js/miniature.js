@@ -11,7 +11,7 @@ const showMiniature = function() {
     const miniPhoto = pictureTemplate.cloneNode(true);
     miniPhoto.querySelector('.picture__img').setAttribute('src', userUrl);
     miniPhoto.querySelector('.picture__likes').textContent = userLikes;
-    miniPhoto.querySelector('.picture__comments').textContent = 1;
+    miniPhoto.querySelector('.picture__comments').textContent = `${document.querySelector('.social__comments').children.length}`;
     photoListElement.appendChild(miniPhoto);
   });
 
