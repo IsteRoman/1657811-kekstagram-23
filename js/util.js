@@ -25,9 +25,7 @@ const randomValueForCommentId = randomValueNoRepeat(1, 25);
 const randomValueForUserId = randomValueNoRepeat(1, 25);
 const randomValueForUserUrl = randomValueNoRepeat(1, 25);
 
-const getRandomArrayElement = (elements) => { // eslint-disable-line
-  return elements[gettingValue(0, elements.length - 1)]; // eslint-disable-line
-}; // eslint-disable-line
+const getRandomArrayElement = (elements) => elements[gettingValue(0, elements.length - 1)];
 
 export {gettingValue};
 export {randomValueForCommentId};

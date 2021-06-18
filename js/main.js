@@ -1,3 +1,3 @@
-import {showMiniature} from './miniature.js';
+import {browse} from './watch.js';
 
-showMiniature();
+browse();
