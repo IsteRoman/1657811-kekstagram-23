@@ -29,7 +29,7 @@ const closeByEsc = function() {
       bigPicture.classList.add('hidden');
     }
   });
-}
+};
 
 const closeByButton = function() {
   const closeBigPicture = document.querySelector('.big-picture__cancel');
@@ -37,7 +37,7 @@ const closeByButton = function() {
     body.classList.remove('modal-open');
     bigPicture.classList.add('hidden');
   });
-}
+};
 
 const browse = function() {
   showMiniature();
@@ -72,9 +72,5 @@ const browse = function() {
     closeByButton();
   }
 };
+
 export {browse};
-
-
-
-
-
