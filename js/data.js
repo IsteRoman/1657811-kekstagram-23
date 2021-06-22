@@ -46,7 +46,7 @@ const craeteComments = function() {
   };
 };
 
-const commentArray = () => new Array(gettingValue(1, 4)).fill(null).map(() => craeteComments());
+const commentArray = () => new Array(gettingValue(1, 25)).fill(null).map(() => craeteComments());
 
 const createPhotoBlock = function() {
   return {
