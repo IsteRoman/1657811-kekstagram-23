@@ -38,7 +38,7 @@ const hideCommentsLoader = function() {
   if (commentBlock.children.length === commentBlock.querySelectorAll('.visi').length) {
     commentsLoader.classList.add('hidden');
   }
-}
+};
 
 const showComment = function() {
   for( let i = 0; i < commentBlock.children.length; i++ ){
@@ -68,7 +68,6 @@ const showComment = function() {
       }
     });
   }
-
 };
 
 const browse = function() {
