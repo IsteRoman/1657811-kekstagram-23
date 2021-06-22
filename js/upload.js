@@ -4,6 +4,8 @@ import {closeByButton} from './util.js';
 import {cheangeScale} from './effects.js';
 import {additionEffect} from './effects.js';
 import {checkFieldValididy} from './validation.js';
+import {hashtagsField} from './validation.js';
+import {commentField} from './validation.js';
 
 const imageUpload = document.querySelector('.img-upload__overlay');
 const buttonOpenFormUpload = document.querySelector('.img-upload__label');

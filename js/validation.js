@@ -9,7 +9,7 @@ const checkLenght = function (string, maxStringLenght) {
 checkLenght('asd', 4);
 
 const setErrorStyle = function(object) {
-  object.style.color = 'rgb(255, 0, 0)';
+  object.style.border = '5px solid rgb(255, 0, 0)';
 };
 
 const removeErrorStyle = function(object) {
@@ -20,43 +20,70 @@ const checkHashtagsField = function() {
   const maxHashtagsNumber = 5;
   const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
   hashtagsField.addEventListener('input', () => {
-    const string =  hashtagsField.value;
-    const hashtagsArray = string.split(' ', 5);
+    const string = hashtagsField.value;
+    const hashtagsArray = string.split(' ', 6);
+    let errorMessageA = '';
+    let errorMessageB = '';
+    let errorMessageC = '';
 
-    for (let i = 0; i < hashtagsArray.length-1; i++) { // eslint-disable-line
-      if (!re.test(`${hashtagsArray[0]}`)) {
-        setErrorStyle(hashtagsField);
-        hashtagsField.setCustomValidity('хэш-тег начинается с символа #.Строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы, символы пунктуации, эмодзи и т. д.;');
-      } else if (re.test(hashtagsArray[i])) {
-        removeErrorStyle(hashtagsField);
-        hashtagsField.setCustomValidity('');
+    const checkInputCorrect = function() {
+      for (let i=0; i <= hashtagsArray.length-1; i++) {
+        if(!re.test(`${hashtagsArray[i]}`)) {
+          errorMessageA = 'Хэш-тег начинается с символа #.Строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы, символы пунктуации, эмодзи и т. д.; ';
+          return false;
+        }
       }
-      const x = hashtagsArray.length-1; // eslint-disable-line
-      if (`${hashtagsArray[x]}`.toUpperCase() === `${hashtagsArray[i]}`.toUpperCase()) {
-        setErrorStyle(hashtagsField);
-        hashtagsField.setAttribute('maxlength', `${hashtagsField.value.length}`);
-        hashtagsField.setCustomValidity('Хэштэги не должны повторяться');
-      } else if (`${hashtagsArray[x]}`.toUpperCase() !== `${hashtagsArray[i]}`.toUpperCase()) {
-        removeErrorStyle(hashtagsField);
-        hashtagsField.removeAttribute('maxlength');
-        hashtagsField.setCustomValidity('');
+    };
+
+    const checkHashtagsLength = function() {
+      if (hashtagsArray.length > maxHashtagsNumber) {
+        errorMessageB = 'Допустимо не более 5 хэш-тегов ';
+        return false;
       }
-      if (hashtagsArray.length === maxHashtagsNumber) {
-        hashtagsField.setAttribute('maxlength', `${hashtagsField.value.length}`);
-      } else if (hashtagsField.length < maxHashtagsNumber) {
-        hashtagsField.removeAttribute('maxlength');
+    };
+
+    const checkIdentityValues = function() {
+      const toUpper = function(x) {
+        return x.toUpperCase();
+      };
+      const hashtagsArrayUpper = hashtagsArray.map(toUpper);
+
+      const valueArr = hashtagsArrayUpper.map((item) => item);
+      const isDuplicate = valueArr.some((item, idx) => valueArr.indexOf(item) !== idx);
+
+      if (isDuplicate === true) {
+        errorMessageC = 'Хэш-теги не должны повторяться';
+        return false;
       }
+    };
+
+    checkInputCorrect();
+    checkHashtagsLength();
+    checkIdentityValues();
+
+    if (checkInputCorrect() === false || checkHashtagsLength() === false || checkIdentityValues() === false) {
+      const errorMessage = `${errorMessageA + errorMessageB + errorMessageC}`;
+      setErrorStyle(hashtagsField);
+      hashtagsField.setCustomValidity(`${errorMessage}`);
+    } else {
+      removeErrorStyle(hashtagsField);
+      hashtagsField.setCustomValidity('');
+    }
+
+    if (string.length === 0) {
+      removeErrorStyle(hashtagsField);
+      hashtagsField.setCustomValidity('');
     }
   });
 };
 
 const checkCommentLength = function() {
-  const maxCommentLenght = 40;
+  const maxCommentLenght = 10;
   commentField.addEventListener('input', () => {
     if (commentField.value.length > maxCommentLenght) {
       setErrorStyle(commentField);
       commentField.setCustomValidity(`Максимальная длинна ${maxCommentLenght} символов`);
-    } else if (commentField.value.length < maxCommentLenght) {
+    } else if (commentField.value.length <= maxCommentLenght) {
       removeErrorStyle(commentField);
       commentField.setCustomValidity('');
     }
@@ -74,3 +101,5 @@ const checkFieldValididy = function() {
 };
 
 export{checkFieldValididy};
+export{hashtagsField};
+export{commentField};
