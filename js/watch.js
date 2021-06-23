@@ -10,6 +10,7 @@ const commentsCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 const commentBlock = document.querySelector('.social__comments');
 const NUMBER_COMMENT_SHOW = 5;
+const commentField = document.querySelector('.social__footer-text');
 
 const getComment = function(index) {
   const commentTemplate = document.querySelector('#comments').content;
@@ -35,6 +36,7 @@ const getCommentsCount = function() {
 };
 
 const hideCommentsLoader = function() {
+  commentsLoader.classList.remove('hidden');
   if (commentBlock.children.length === commentBlock.querySelectorAll('.visi').length) {
     commentsLoader.classList.add('hidden');
   }
@@ -52,21 +54,6 @@ const showComment = function() {
     }
     getCommentsCount();
     hideCommentsLoader();
-
-    commentsLoader.addEventListener('click', () => {
-      const visi = commentBlock.querySelectorAll('.visi');
-      let next = visi[visi.length-1].nextElementSibling;
-
-      for (let f = 0; f < NUMBER_COMMENT_SHOW; f++) {
-        if( next ) {
-          next.classList.add('visi');
-          next.classList.remove('hidden');
-          next = next.nextElementSibling;
-          getCommentsCount();
-          hideCommentsLoader();
-        }
-      }
-    });
   }
 };
 
@@ -99,7 +86,22 @@ const browse = function() {
 
       showComment();
 
-      closeByEsc(bigPicture);
+      commentsLoader.addEventListener('click', () => {
+        const visi = commentBlock.querySelectorAll('.visi');
+        let next = visi[visi.length-1].nextElementSibling;
+
+        for (let f = 0; f < NUMBER_COMMENT_SHOW; f++) {
+          if( next ) {
+            next.classList.add('visi');
+            next.classList.remove('hidden');
+            next = next.nextElementSibling;
+            getCommentsCount();
+            hideCommentsLoader();
+          }
+        }
+      });
+
+      closeByEsc(bigPicture, commentField);
       closeByButton(closeBigPicture, bigPicture);
     };
 
