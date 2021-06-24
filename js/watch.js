@@ -57,6 +57,23 @@ const showComment = function() {
   }
 };
 
+const showNewComment = function() {
+  commentsLoader.addEventListener('click', () => {
+    const visi = commentBlock.querySelectorAll('.visi');
+    let next = visi[visi.length-1].nextElementSibling;
+
+    for (let f = 0; f < NUMBER_COMMENT_SHOW; f++) {
+      if( next ) {
+        next.classList.add('visi');
+        next.classList.remove('hidden');
+        next = next.nextElementSibling;
+        getCommentsCount();
+        hideCommentsLoader();
+      }
+    }
+  });
+};
+
 const browse = function() {
 
   showMiniature();
@@ -86,27 +103,14 @@ const browse = function() {
 
       showComment();
 
-      commentsLoader.addEventListener('click', () => {
-        const visi = commentBlock.querySelectorAll('.visi');
-        let next = visi[visi.length-1].nextElementSibling;
-
-        for (let f = 0; f < NUMBER_COMMENT_SHOW; f++) {
-          if( next ) {
-            next.classList.add('visi');
-            next.classList.remove('hidden');
-            next = next.nextElementSibling;
-            getCommentsCount();
-            hideCommentsLoader();
-          }
-        }
-      });
-
       closeByEsc(bigPicture, commentField);
       closeByButton(closeBigPicture, bigPicture);
     };
 
     showBigPictuer.addEventListener('click', openBigPicture.bind(showBigPictuer, index));
   });
+
+  showNewComment();
 };
 
 export {browse};
