@@ -10,7 +10,7 @@ const commentsCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 const commentBlock = document.querySelector('.social__comments');
 const NUMBER_COMMENT_SHOW = 5;
-const NUMBER_ADD_COMMENT_SHOW = 4;
+const commentField = document.querySelector('.social__footer-text');
 
 const getComment = function(index) {
   const commentTemplate = document.querySelector('#comments').content;
@@ -29,38 +29,50 @@ const getComment = function(index) {
   commentBlock.appendChild(commentBlockElement);
 };
 
-const showComment = function() {
-  commentsLoader.classList.add('hidden');
-  let startNumber;
-  const endNumber = commentBlock.children.length;
-  if (commentBlock.children.length < NUMBER_COMMENT_SHOW) {
-    startNumber = commentBlock.children.length;
-  } else if (commentBlock.children.length > NUMBER_COMMENT_SHOW) {
-    startNumber = NUMBER_COMMENT_SHOW;
-    commentsLoader.classList.remove('hidden');
-    const hiddenArray = [];
-    for (let i = NUMBER_COMMENT_SHOW; i <= commentBlock.children.length-1; i++ ) { // eslint-disable-line
-      commentBlock.children[i].classList.add('hidden');
-      hiddenArray.push(commentBlock.children[i]);
-    }
-    commentsLoader.addEventListener('click', () => {
-      if (hiddenArray.length >= NUMBER_COMMENT_SHOW) {
-        for (let i = 0; i <= NUMBER_ADD_COMMENT_SHOW; i++ ) { // eslint-disable-line
-          hiddenArray[i].classList.remove('hidden');
-        }
-        hiddenArray.splice(0, NUMBER_COMMENT_SHOW);
-      } else if (hiddenArray.length < NUMBER_COMMENT_SHOW) {
-        for (let i = 0; i <= hiddenArray.length-1; i++ ) { // eslint-disable-line
-          hiddenArray[i].classList.remove('hidden');
-        }
-        hiddenArray.splice(0);
-        commentsLoader.classList.add('hidden');
-      }
-    });
-  }
-  commentsCount.textContent = `${startNumber} из ${endNumber} коментариев`;
+const getCommentsCount = function() {
+  const startNumber = commentBlock.querySelectorAll('.visi').length;
+  const finalNumber = commentBlock.children.length;
+  commentsCount.textContent = `${startNumber} из ${finalNumber} комментариев`;
 };
 
+const hideCommentsLoader = function() {
+  commentsLoader.classList.remove('hidden');
+  if (commentBlock.children.length === commentBlock.querySelectorAll('.visi').length) {
+    commentsLoader.classList.add('hidden');
+  }
+};
+
+const showComment = function() {
+  for( let i = 0; i < commentBlock.children.length; i++ ){
+    const li = commentBlock.children;
+    li[i].classList.add('hidden');
+    for( let j = 0; j < NUMBER_COMMENT_SHOW; j++ ) {
+      if ( li[j] ) {
+        li[j].classList.add('visi');
+        li[j].classList.remove('hidden');
+      }
+    }
+    getCommentsCount();
+    hideCommentsLoader();
+  }
+};
+
+const showNewComment = function() {
+  commentsLoader.addEventListener('click', () => {
+    const visi = commentBlock.querySelectorAll('.visi');
+    let next = visi[visi.length-1].nextElementSibling;
+
+    for (let f = 0; f < NUMBER_COMMENT_SHOW; f++) {
+      if( next ) {
+        next.classList.add('visi');
+        next.classList.remove('hidden');
+        next = next.nextElementSibling;
+        getCommentsCount();
+        hideCommentsLoader();
+      }
+    }
+  });
+};
 
 const browse = function() {
 
@@ -91,12 +103,14 @@ const browse = function() {
 
       showComment();
 
-      closeByEsc(bigPicture);
+      closeByEsc(bigPicture, commentField);
       closeByButton(closeBigPicture, bigPicture);
     };
 
     showBigPictuer.addEventListener('click', openBigPicture.bind(showBigPictuer, index));
   });
+
+  showNewComment();
 };
 
 export {browse};

@@ -34,11 +34,13 @@ const openBlock = function(object) {
   object.classList.remove('hidden');
 };
 
-const closeByEsc = function(object) {
+const closeByEsc = function(object, field1, field2) {
   window.addEventListener('keydown', (evt) => {
     if (evt.keyCode === 27) {
-      body.classList.remove('modal-open');
-      object.classList.add('hidden');
+      if(!(document.activeElement.isEqualNode(field1) || document.activeElement.isEqualNode(field2))) {
+        body.classList.remove('modal-open');
+        object.classList.add('hidden');
+      }
     }
   });
 };
