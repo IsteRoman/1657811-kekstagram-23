@@ -80,8 +80,8 @@ const browse = function() {
 
   const picture = document.querySelectorAll('.picture');
 
-  picture.forEach((showBigPictuer, index) => {
-    const openBigPicture = function(index, event) { // eslint-disable-line
+  picture.forEach((showBigPictuer, ind) => {
+    const openBigPicture = function(index, event) {
       event.preventDefault();
       getComment(index);
 
@@ -107,7 +107,7 @@ const browse = function() {
       closeByButton(closeBigPicture, bigPicture);
     };
 
-    showBigPictuer.addEventListener('click', openBigPicture.bind(showBigPictuer, index));
+    showBigPictuer.addEventListener('click', openBigPicture.bind(showBigPictuer, ind));
   });
 
   showNewComment();
