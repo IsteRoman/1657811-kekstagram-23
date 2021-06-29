@@ -19,7 +19,7 @@ const removeErrorStyle = function(object) {
 const checkHashtagsField = function() {
   const maxHashtagsNumber = 5;
   const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
-  hashtagsField.addEventListener('input', () => {
+  hashtagsField.addEventListener('blur', () => {
     const string = hashtagsField.value;
     const hashtagsArray = string.split(' ', 6);
     let errorMessageA = '';
@@ -79,7 +79,7 @@ const checkHashtagsField = function() {
 
 const checkCommentLength = function() {
   const maxCommentLenght = 10;
-  commentField.addEventListener('input', () => {
+  commentField.addEventListener('blur', () => {
     if (commentField.value.length > maxCommentLenght) {
       setErrorStyle(commentField);
       commentField.setCustomValidity(`Максимальная длинна ${maxCommentLenght} символов`);

@@ -35,8 +35,9 @@ const additionEffect = function() {
       sliderValue.setAttribute('value', `${unencoded[handle]}`);
       if (effectConventionalUnit) {
         image.style.filter = `${effectName}(${sliderValue.value}${effectConventionalUnit})`;
+      } else {
+        image.style.filter = `${effectName}(${sliderValue.value})`;
       }
-      image.style.filter = `${effectName}(${sliderValue.value})`;
     });
   };
 
@@ -82,12 +83,12 @@ const additionEffect = function() {
       slider.noUiSlider.updateOptions({
         range: {
           min: 0,
-          max: 1,
+          max: 100,
         },
-        step: 0.01,
+        step: 1,
       });
-      slider.noUiSlider.set(1);
-      changeEffectsIntens('invert');
+      slider.noUiSlider.set(100);
+      changeEffectsIntens('invert', '%');
       classRemover();
       image.classList.add('effects__preview--marvin');
 
@@ -158,4 +159,3 @@ const cheangeScale = function() {
 
 export{cheangeScale};
 export{additionEffect};
-
