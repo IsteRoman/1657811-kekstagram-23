@@ -1,5 +1,4 @@
-import {cleanseFiltersBlock} from './effects.js';
-import {cleanseInputs} from './upload.js'
+import {cleanseForm} from './upload.js';
 
 const body = document.querySelector('body');
 
@@ -40,7 +39,7 @@ const openBlock = function(object) {
 const closeBlock = function(object) {
   body.classList.remove('modal-open');
   object.classList.add('hidden');
-}
+};
 
 const setErrorStyle = function(object) {
   object.style.border = '5px solid rgb(255, 0, 0)';
@@ -55,8 +54,7 @@ const closeByEsc = function(object, field1, field2) {
     if (evt.keyCode === 27) {
       if(!(document.activeElement.isEqualNode(field1) || document.activeElement.isEqualNode(field2))) {
         closeBlock(object);
-        cleanseFiltersBlock();
-        cleanseInputs();
+        cleanseForm();
       }
     }
   });
@@ -65,18 +63,17 @@ const closeByEsc = function(object, field1, field2) {
 const closeByButton = function(button, object) {
   button.addEventListener('click', () => {
     closeBlock(object);
-    cleanseFiltersBlock();
-    cleanseInputs();
+    cleanseForm();
   });
 };
 
 const addMessage = function(objectAdd) {
   body.appendChild(objectAdd);
-}
+};
 
 const removeMessage = function(object) {
   body.removeChild(object);
-}
+};
 
 const showMessage = function(objectAdd, button, object) {
   addMessage(objectAdd);
@@ -91,12 +88,12 @@ const showMessage = function(objectAdd, button, object) {
     }
   });
 
-  window.addEventListener('click', function() {
+  window.addEventListener('click', () => {
     if (!(document.activeElement.isEqualNode(object))) {
       removeMessage(object);
     }
   });
-}
+};
 
 export {gettingValue};
 export {randomValueForCommentId};

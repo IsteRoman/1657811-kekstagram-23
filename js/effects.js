@@ -31,13 +31,13 @@ const cleanseFilter = function() {
   image.style.filter = ('');
   sliderValue.setAttribute('value', '');
   classRemover();
-}
+};
 
 const cleanseFiltersBlock = function() {
   cleanseFilter();
   scaleControl.setAttribute('value', '100');
-  image.style.transform = `scale(100%)`;
-}
+  image.style.transform = 'scale(100%)';
+};
 
 const additionEffect = function() {
   noUiSlider.create(slider, {

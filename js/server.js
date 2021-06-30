@@ -13,6 +13,14 @@ const errorButton = errorSection.querySelector('.error__button');
 const loadingTemplate = document.querySelector('#messages').content;
 const loadingSection = loadingTemplate.querySelector('.img-upload__message');
 
+const getData = function(onSuccess) {
+  fetch('https://23.javascript.pages.academy/kekstagram/data')
+    .then((response) => response.json())
+    .then((userPhotos) => {
+      onSuccess(userPhotos);
+    });
+};
+
 const sentData = function(bodyObject, closeObject) {
   addMessage(loadingTemplate);
   fetch(
@@ -22,21 +30,22 @@ const sentData = function(bodyObject, closeObject) {
       body: bodyObject,
     },
   )
-  .then((response) => {
-    if (response.ok) {
-      removeMessage(loadingSection);
-      closeBlock(closeObject);
-      cleanseForm();
-      showMessage(successTemplate, successButton, successSection);
-    } else {
+    .then((response) => {
+      if (response.ok) {
+        removeMessage(loadingSection);
+        closeBlock(closeObject);
+        cleanseForm();
+        showMessage(successTemplate, successButton, successSection);
+      } else {
+        removeMessage(loadingSection);
+        showMessage(errorTemplate, errorButton, errorSection);
+      }
+    })
+    .catch(() => {
       removeMessage(loadingSection);
       showMessage(errorTemplate, errorButton, errorSection);
-    }
-  })
-  .catch(() => {
-    removeMessage(loadingSection);
-    showMessage(errorTemplate, errorButton, errorSection);
-  })
-}
+    });
+};
 
+export {getData};
 export {sentData};

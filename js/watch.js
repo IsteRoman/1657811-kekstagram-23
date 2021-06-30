@@ -3,6 +3,7 @@ import {blockPhoto} from './data.js';
 import {openBlock} from './util.js';
 import {closeByEsc} from './util.js';
 import {closeByButton} from './util.js';
+import {getData} from './server.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const closeBigPicture = document.querySelector('.big-picture__cancel');
@@ -14,30 +15,31 @@ const commentField = document.querySelector('.social__footer-text');
 
 const getComment = function(index) {
   const commentTemplate = document.querySelector('#comments').content;
-  const commentData = blockPhoto[index].userComment;
-  const commentBlockElement = document.createDocumentFragment();
-  commentBlock.innerHTML = '';
+  getData((userPhotos) => {
+    const commentData = userPhotos[index].comments;
+    const commentBlockElement = document.createDocumentFragment();
+    commentBlock.innerHTML = '';
 
-  commentData.forEach(({userCommentAvatar, userCommentName, userCommentMessage}) => {
-    const comment = commentTemplate.cloneNode(true);
-    comment.querySelector('.social__picture').setAttribute('src', userCommentAvatar);
-    comment.querySelector('.social__picture').setAttribute('alt', userCommentName);
-    comment.querySelector('.social__text').textContent = `${userCommentMessage}`;
-
-    commentBlockElement.appendChild(comment);
+    commentData.forEach(({avatar, name, message}) => {
+      const comment = commentTemplate.cloneNode(true);
+      comment.querySelector('.social__picture').setAttribute('src', avatar);
+      comment.querySelector('.social__picture').setAttribute('alt', name);
+      comment.querySelector('.social__text').textContent = `${message}`;
+      commentBlockElement.appendChild(comment);
+    });
+    commentBlock.appendChild(commentBlockElement);
   });
-  commentBlock.appendChild(commentBlockElement);
 };
 
 const getCommentsCount = function() {
-  const startNumber = commentBlock.querySelectorAll('.visi').length;
+  const startNumber = commentBlock.querySelectorAll('.visible').length;
   const finalNumber = commentBlock.children.length;
   commentsCount.textContent = `${startNumber} из ${finalNumber} комментариев`;
 };
 
 const hideCommentsLoader = function() {
   commentsLoader.classList.remove('hidden');
-  if (commentBlock.children.length === commentBlock.querySelectorAll('.visi').length) {
+  if (commentBlock.children.length === commentBlock.querySelectorAll('.visible').length) {
     commentsLoader.classList.add('hidden');
   }
 };
@@ -48,7 +50,7 @@ const showComment = function() {
     li[i].classList.add('hidden');
     for( let j = 0; j < NUMBER_COMMENT_SHOW; j++ ) {
       if ( li[j] ) {
-        li[j].classList.add('visi');
+        li[j].classList.add('visible');
         li[j].classList.remove('hidden');
       }
     }
@@ -59,12 +61,12 @@ const showComment = function() {
 
 const showNewComment = function() {
   commentsLoader.addEventListener('click', () => {
-    const visi = commentBlock.querySelectorAll('.visi');
-    let next = visi[visi.length-1].nextElementSibling;
+    const visible = commentBlock.querySelectorAll('.visible');
+    let next = visible[visible.length-1].nextElementSibling;
 
     for (let f = 0; f < NUMBER_COMMENT_SHOW; f++) {
       if( next ) {
-        next.classList.add('visi');
+        next.classList.add('visible');
         next.classList.remove('hidden');
         next = next.nextElementSibling;
         getCommentsCount();
@@ -81,15 +83,15 @@ const browse = function() {
   const picture = document.querySelectorAll('.picture');
 
   picture.forEach((showBigPictuer, ind) => {
-    const openBigPicture = function(index, event) {
-      event.preventDefault();
+    const openBigPicture = function(index, evt) {
+      evt.preventDefault();
       getComment(index);
 
       const likes = document.querySelector('.likes-count');
       const pictureUrl = document.querySelector('.big-picture__img').
         querySelector('img');
       const discription = document.querySelector('.social__caption');
-      const userDescription = blockPhoto[index].userDescription;
+      const userDescription = blockPhoto[index].description;
       discription.textContent = userDescription;
 
       openBlock(bigPicture);

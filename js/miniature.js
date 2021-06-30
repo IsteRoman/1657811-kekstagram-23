@@ -1,21 +1,21 @@
-import {blockPhoto} from './data.js';
-
+import {getData} from './server.js';
 
 const showMiniature = function() {
   const photoList = document.querySelector('.pictures');
   const pictureTemplate = document.querySelector('#picture').content;
 
-  const photoListElement = document.createDocumentFragment();
+  getData((userPhotos) => {
+    const photoListElement = document.createDocumentFragment();
+    userPhotos.forEach(({url, likes, comments}) => {
+      const miniPhoto = pictureTemplate.cloneNode(true);
+      miniPhoto.querySelector('.picture__img').setAttribute('src', url);
+      miniPhoto.querySelector('.picture__likes').textContent = likes;
+      miniPhoto.querySelector('.picture__comments').textContent = `${comments.length}`;
+      photoListElement.appendChild(miniPhoto);
+    });
 
-  blockPhoto.forEach(({userUrl, userLikes, userComment}) => {
-    const miniPhoto = pictureTemplate.cloneNode(true);
-    miniPhoto.querySelector('.picture__img').setAttribute('src', userUrl);
-    miniPhoto.querySelector('.picture__likes').textContent = userLikes;
-    miniPhoto.querySelector('.picture__comments').textContent = `${userComment.length}`;
-    photoListElement.appendChild(miniPhoto);
+    photoList.appendChild(photoListElement);
   });
-
-  photoList.appendChild(photoListElement);
 };
 
 export {showMiniature};
