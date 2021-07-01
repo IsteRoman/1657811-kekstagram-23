@@ -10,6 +10,13 @@ const effectHeat = document.querySelector('#effect-heat');
 const sliderBlock = document.querySelector('.effect-level');
 const sliderValue = document.querySelector('.effect-level__value');
 const slider = document.querySelector('.effect-level__slider');
+const buttonScalePlus = document.querySelector('.scale__control--bigger');
+const buttonScaleMinus = document.querySelector('.scale__control--smaller');
+const scaleControl = document.querySelector('.scale__control--value');
+const minScaleValue = 25;
+const preMaxScaleValue = 75;
+const maxScaleValue = 100;
+const scaleStep = 25;
 
 const classRemover = function () {
   image.classList.remove('effects__preview--chrome');
@@ -17,6 +24,19 @@ const classRemover = function () {
   image.classList.remove('effects__preview--marvin');
   image.classList.remove('effects__preview--phobos');
   image.classList.remove('effects__preview--heat');
+};
+
+const cleanseFilter = function() {
+  sliderBlock.classList.add('hidden');
+  image.style.filter = ('');
+  sliderValue.setAttribute('value', '');
+  classRemover();
+};
+
+const cleanseFiltersBlock = function() {
+  cleanseFilter();
+  scaleControl.setAttribute('value', '100');
+  image.style.transform = 'scale(100%)';
 };
 
 const additionEffect = function() {
@@ -35,8 +55,9 @@ const additionEffect = function() {
       sliderValue.setAttribute('value', `${unencoded[handle]}`);
       if (effectConventionalUnit) {
         image.style.filter = `${effectName}(${sliderValue.value}${effectConventionalUnit})`;
+      } else {
+        image.style.filter = `${effectName}(${sliderValue.value})`;
       }
-      image.style.filter = `${effectName}(${sliderValue.value})`;
     });
   };
 
@@ -44,10 +65,7 @@ const additionEffect = function() {
 
   effectList.addEventListener('change', () => {
     if (effectOriginal.checked) {
-      sliderBlock.classList.add('hidden');
-      image.removeAttribute('style');
-      sliderValue.setAttribute('value', '');
-      classRemover();
+      cleanseFilter();
 
     } else if (effectChrome.checked) {
       sliderBlock.classList.remove('hidden');
@@ -82,12 +100,12 @@ const additionEffect = function() {
       slider.noUiSlider.updateOptions({
         range: {
           min: 0,
-          max: 1,
+          max: 100,
         },
-        step: 0.01,
+        step: 1,
       });
-      slider.noUiSlider.set(1);
-      changeEffectsIntens('invert');
+      slider.noUiSlider.set(100);
+      changeEffectsIntens('invert', '%');
       classRemover();
       image.classList.add('effects__preview--marvin');
 
@@ -123,13 +141,6 @@ const additionEffect = function() {
 };
 
 const cheangeScale = function() {
-  const buttonScalePlus = document.querySelector('.scale__control--bigger');
-  const buttonScaleMinus = document.querySelector('.scale__control--smaller');
-  const scaleControl = document.querySelector('.scale__control--value');
-  const minScaleValue = 25;
-  const preMaxScaleValue = 75;
-  const maxScaleValue = 100;
-  const scaleStep = 25;
 
   const dec = function() {
     if (parseFloat(scaleControl.getAttribute('value')) > minScaleValue) {
@@ -158,4 +169,4 @@ const cheangeScale = function() {
 
 export{cheangeScale};
 export{additionEffect};
-
+export {cleanseFiltersBlock};

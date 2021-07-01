@@ -1,27 +1,18 @@
+import {setErrorStyle} from './util.js';
+import {removeErrorStyle} from './util.js';
+
 const hashtagsField = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
 const submitButton = document.querySelector('.img-upload__submit');
-
-const checkLenght = function (string, maxStringLenght) {
-  return string.length <= maxStringLenght;
-};
-
-checkLenght('asd', 4);
-
-const setErrorStyle = function(object) {
-  object.style.border = '5px solid rgb(255, 0, 0)';
-};
-
-const removeErrorStyle = function(object) {
-  object.removeAttribute('style');
-};
+const maxHashtagsNumber = 5;
+const maxCommentLenght = 140;
+const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 
 const checkHashtagsField = function() {
-  const maxHashtagsNumber = 5;
-  const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
-  hashtagsField.addEventListener('input', () => {
+
+  hashtagsField.addEventListener('blur', () => {
     const string = hashtagsField.value;
-    const hashtagsArray = string.split(' ', 6);
+    const hashtagsArray = string.split(' ');
     let errorMessageA = '';
     let errorMessageB = '';
     let errorMessageC = '';
@@ -78,8 +69,7 @@ const checkHashtagsField = function() {
 };
 
 const checkCommentLength = function() {
-  const maxCommentLenght = 10;
-  commentField.addEventListener('input', () => {
+  commentField.addEventListener('blur', () => {
     if (commentField.value.length > maxCommentLenght) {
       setErrorStyle(commentField);
       commentField.setCustomValidity(`Максимальная длинна ${maxCommentLenght} символов`);

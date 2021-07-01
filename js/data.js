@@ -39,10 +39,10 @@ const USER_NAME = [
 
 const craeteComments = function() {
   return {
-    userCommentId: gettingValue(1, 1000),
-    userCommentAvatar: `img/avatar-${gettingValue(1, 6)}.svg`,
-    userCommentMessage: getRandomArrayElement(COMMENT_MESSAGE),
-    userCommentName: getRandomArrayElement(USER_NAME),
+    id: gettingValue(1, 1000),
+    avatar: `img/avatar-${gettingValue(1, 6)}.svg`,
+    message: getRandomArrayElement(COMMENT_MESSAGE),
+    name: getRandomArrayElement(USER_NAME),
   };
 };
 
@@ -50,11 +50,11 @@ const commentArray = () => new Array(gettingValue(1, 25)).fill(null).map(() => c
 
 const createPhotoBlock = function() {
   return {
-    userId: randomValueForUserId(),
-    userUrl: `photos/${randomValueForUserUrl()}.jpg`,
-    userDescription: getRandomArrayElement(PHOTO_DISCRIPTION),
-    userLikes: gettingValue(15, 200),
-    userComment: commentArray(),
+    id: randomValueForUserId(),
+    url: `photos/${randomValueForUserUrl()}.jpg`,
+    description: getRandomArrayElement(PHOTO_DISCRIPTION),
+    likes: gettingValue(15, 200),
+    comments: commentArray(),
   };
 };
 
