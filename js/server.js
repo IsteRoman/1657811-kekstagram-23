@@ -2,6 +2,7 @@ import {showMessage} from './util.js';
 import {closeBlock} from './util.js';
 import {addMessage} from './util.js';
 import {removeMessage} from './util.js';
+import {showServerFailMessage} from './util.js';
 import {cleanseForm} from './upload.js';
 
 const successTemplate = document.querySelector('#success').content;
@@ -15,9 +16,16 @@ const loadingSection = loadingTemplate.querySelector('.img-upload__message');
 
 const getData = function(onSuccess) {
   fetch('https://23.javascript.pages.academy/kekstagram/data')
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+    })
     .then((userPhotos) => {
       onSuccess(userPhotos);
+    })
+    .catch(() => {
+      showServerFailMessage(errorTemplate, errorButton, errorSection);
     });
 };
 

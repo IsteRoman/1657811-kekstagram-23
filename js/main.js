@@ -1,5 +1,7 @@
 import {browse} from './watch.js';
 import {uploadImage} from './upload.js';
+import {getData} from './server.js';
 
-browse();
+getData(browse);
+
 uploadImage();

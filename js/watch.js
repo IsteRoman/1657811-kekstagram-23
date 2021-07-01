@@ -1,9 +1,7 @@
 import {showMiniature} from './miniature.js';
-import {blockPhoto} from './data.js';
 import {openBlock} from './util.js';
 import {closeByEsc} from './util.js';
 import {closeByButton} from './util.js';
-import {getData} from './server.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const closeBigPicture = document.querySelector('.big-picture__cancel');
@@ -13,22 +11,21 @@ const commentBlock = document.querySelector('.social__comments');
 const NUMBER_COMMENT_SHOW = 5;
 const commentField = document.querySelector('.social__footer-text');
 
-const getComment = function(index) {
+const getComment = function(userPhotos, index) {
   const commentTemplate = document.querySelector('#comments').content;
-  getData((userPhotos) => {
-    const commentData = userPhotos[index].comments;
-    const commentBlockElement = document.createDocumentFragment();
-    commentBlock.innerHTML = '';
 
-    commentData.forEach(({avatar, name, message}) => {
-      const comment = commentTemplate.cloneNode(true);
-      comment.querySelector('.social__picture').setAttribute('src', avatar);
-      comment.querySelector('.social__picture').setAttribute('alt', name);
-      comment.querySelector('.social__text').textContent = `${message}`;
-      commentBlockElement.appendChild(comment);
-    });
-    commentBlock.appendChild(commentBlockElement);
+  const commentData = userPhotos[index].comments;
+  const commentBlockElement = document.createDocumentFragment();
+  commentBlock.innerHTML = '';
+
+  commentData.forEach(({avatar, name, message}) => {
+    const comment = commentTemplate.cloneNode(true);
+    comment.querySelector('.social__picture').setAttribute('src', avatar);
+    comment.querySelector('.social__picture').setAttribute('alt', name);
+    comment.querySelector('.social__text').textContent = `${message}`;
+    commentBlockElement.appendChild(comment);
   });
+  commentBlock.appendChild(commentBlockElement);
 };
 
 const getCommentsCount = function() {
@@ -76,22 +73,21 @@ const showNewComment = function() {
   });
 };
 
-const browse = function() {
+const browse = function(userPhotos) {
 
-  showMiniature();
-
+  showMiniature(userPhotos);
   const picture = document.querySelectorAll('.picture');
 
   picture.forEach((showBigPictuer, ind) => {
     const openBigPicture = function(index, evt) {
       evt.preventDefault();
-      getComment(index);
+      getComment(userPhotos, index);
 
       const likes = document.querySelector('.likes-count');
       const pictureUrl = document.querySelector('.big-picture__img').
         querySelector('img');
       const discription = document.querySelector('.social__caption');
-      const userDescription = blockPhoto[index].description;
+      const userDescription = userPhotos[index].description;
       discription.textContent = userDescription;
 
       openBlock(bigPicture);
@@ -113,6 +109,7 @@ const browse = function() {
   });
 
   showNewComment();
+
 };
 
 export {browse};
