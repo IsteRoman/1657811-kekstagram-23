@@ -13,23 +13,25 @@ const errorSection = errorTemplate.querySelector('.error');
 const errorButton = errorSection.querySelector('.error__button');
 const loadingTemplate = document.querySelector('#messages').content;
 const loadingSection = loadingTemplate.querySelector('.img-upload__message');
+const filtersButtonBlock = document.querySelector('.img-filters');
 
-const getData = function(onSuccess) {
+const getData = (onSuccess) => {
   fetch('https://23.javascript.pages.academy/kekstagram/data')
     .then((response) => {
       if (response.ok) {
+        filtersButtonBlock.classList.remove('img-filters--inactive');
         return response.json();
       }
     })
-    .then((userPhotos) => {
-      onSuccess(userPhotos);
+    .then((usersPhotos) => {
+      onSuccess(usersPhotos);
     })
     .catch(() => {
       showServerFailMessage(errorTemplate, errorButton, errorSection);
     });
 };
 
-const sentData = function(bodyObject, closeObject) {
+const sentData = (bodyObject, closeObject) => {
   addMessage(loadingTemplate);
   fetch(
     'https://23.javascript.pages.academy/kekstagram',
