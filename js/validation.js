@@ -4,11 +4,12 @@ import {removeErrorStyle} from './util.js';
 const hashtagsField = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
 const submitButton = document.querySelector('.img-upload__submit');
-const maxHashtagsNumber = 5;
-const maxCommentLenght = 140;
+const MAX_HASHTAGS_NUMBER = 5;
+const MAX_COMMENT_LENGTH = 140;
 const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
+const ZERO_VALUE = 0;
 
-const checkHashtagsField = function() {
+const checkHashtagsField = () => {
 
   hashtagsField.addEventListener('blur', () => {
     const string = hashtagsField.value;
@@ -17,7 +18,7 @@ const checkHashtagsField = function() {
     let errorMessageB = '';
     let errorMessageC = '';
 
-    const checkInputCorrect = function() {
+    const checkInputCorrect = () => {
       for (let i=0; i <= hashtagsArray.length-1; i++) {
         if(!re.test(`${hashtagsArray[i]}`)) {
           errorMessageA = 'Хэш-тег начинается с символа #.Строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы, символы пунктуации, эмодзи и т. д.; ';
@@ -26,17 +27,15 @@ const checkHashtagsField = function() {
       }
     };
 
-    const checkHashtagsLength = function() {
-      if (hashtagsArray.length > maxHashtagsNumber) {
+    const checkHashtagsLength = () => {
+      if (hashtagsArray.length > MAX_HASHTAGS_NUMBER) {
         errorMessageB = 'Допустимо не более 5 хэш-тегов ';
         return false;
       }
     };
 
-    const checkIdentityValues = function() {
-      const toUpper = function(x) {
-        return x.toUpperCase();
-      };
+    const checkIdentityValues = () => {
+      const toUpper = (x) => x.toUpperCase();
       const hashtagsArrayUpper = hashtagsArray.map(toUpper);
 
       const valueArr = hashtagsArrayUpper.map((item) => item);
@@ -61,26 +60,26 @@ const checkHashtagsField = function() {
       hashtagsField.setCustomValidity('');
     }
 
-    if (string.length === 0) {
+    if (string.length === ZERO_VALUE) {
       removeErrorStyle(hashtagsField);
       hashtagsField.setCustomValidity('');
     }
   });
 };
 
-const checkCommentLength = function() {
+const checkCommentLength = () => {
   commentField.addEventListener('blur', () => {
-    if (commentField.value.length > maxCommentLenght) {
+    if (commentField.value.length > MAX_COMMENT_LENGTH) {
       setErrorStyle(commentField);
-      commentField.setCustomValidity(`Максимальная длинна ${maxCommentLenght} символов`);
-    } else if (commentField.value.length <= maxCommentLenght) {
+      commentField.setCustomValidity(`Максимальная длинна ${MAX_COMMENT_LENGTH} символов`);
+    } else if (commentField.value.length <= MAX_COMMENT_LENGTH) {
       removeErrorStyle(commentField);
       commentField.setCustomValidity('');
     }
   });
 };
 
-const checkFieldValididy = function() {
+const checkFieldValididy = () => {
   checkHashtagsField();
   checkCommentLength();
   submitButton.addEventListener('submit', (evt) => {

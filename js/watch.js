@@ -3,6 +3,7 @@ import {openBlock} from './util.js';
 import {closeByEsc} from './util.js';
 import {closeByButton} from './util.js';
 
+
 const bigPicture = document.querySelector('.big-picture');
 const closeBigPicture = document.querySelector('.big-picture__cancel');
 const commentsCount = document.querySelector('.social__comment-count');
@@ -11,10 +12,9 @@ const commentBlock = document.querySelector('.social__comments');
 const NUMBER_COMMENT_SHOW = 5;
 const commentField = document.querySelector('.social__footer-text');
 
-const getComment = function(userPhotos, index) {
+const getComment = (usersPhotos, index) => {
   const commentTemplate = document.querySelector('#comments').content;
-
-  const commentData = userPhotos[index].comments;
+  const commentData = usersPhotos[index].comments;
   const commentBlockElement = document.createDocumentFragment();
   commentBlock.innerHTML = '';
 
@@ -28,20 +28,20 @@ const getComment = function(userPhotos, index) {
   commentBlock.appendChild(commentBlockElement);
 };
 
-const getCommentsCount = function() {
+const getCommentsCount = () => {
   const startNumber = commentBlock.querySelectorAll('.visible').length;
   const finalNumber = commentBlock.children.length;
   commentsCount.textContent = `${startNumber} из ${finalNumber} комментариев`;
 };
 
-const hideCommentsLoader = function() {
+const hideCommentsLoader = () => {
   commentsLoader.classList.remove('hidden');
   if (commentBlock.children.length === commentBlock.querySelectorAll('.visible').length) {
     commentsLoader.classList.add('hidden');
   }
 };
 
-const showComment = function() {
+const showComment = () => {
   for( let i = 0; i < commentBlock.children.length; i++ ){
     const li = commentBlock.children;
     li[i].classList.add('hidden');
@@ -56,7 +56,7 @@ const showComment = function() {
   }
 };
 
-const showNewComment = function() {
+const showNewComment = () => {
   commentsLoader.addEventListener('click', () => {
     const visible = commentBlock.querySelectorAll('.visible');
     let next = visible[visible.length-1].nextElementSibling;
@@ -73,21 +73,21 @@ const showNewComment = function() {
   });
 };
 
-const browse = function(userPhotos) {
+const browse = (usersPhotos) => {
 
-  showMiniature(userPhotos);
+  showMiniature(usersPhotos);
   const picture = document.querySelectorAll('.picture');
 
   picture.forEach((showBigPictuer, ind) => {
     const openBigPicture = function(index, evt) {
       evt.preventDefault();
-      getComment(userPhotos, index);
+      getComment(usersPhotos, index);
 
       const likes = document.querySelector('.likes-count');
       const pictureUrl = document.querySelector('.big-picture__img').
         querySelector('img');
       const discription = document.querySelector('.social__caption');
-      const userDescription = userPhotos[index].description;
+      const userDescription = usersPhotos[index].description;
       discription.textContent = userDescription;
 
       openBlock(bigPicture);
@@ -100,16 +100,12 @@ const browse = function(userPhotos) {
       pictureUrl.setAttribute('src', allUrl);
 
       showComment();
-
       closeByEsc(bigPicture, commentField);
       closeByButton(closeBigPicture, bigPicture);
     };
-
     showBigPictuer.addEventListener('click', openBigPicture.bind(showBigPictuer, ind));
   });
-
   showNewComment();
-
 };
 
 export {browse};

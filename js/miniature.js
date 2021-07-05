@@ -1,9 +1,9 @@
-const showMiniature = function(userPhotos) {
+const showMiniature = (usersPhotos) => {
   const photoList = document.querySelector('.pictures');
   const pictureTemplate = document.querySelector('#picture').content;
-
   const photoListElement = document.createDocumentFragment();
-  userPhotos.forEach(({url, likes, comments}) => {
+
+  usersPhotos.forEach(({url, likes, comments}) => {
     const miniPhoto = pictureTemplate.cloneNode(true);
     miniPhoto.querySelector('.picture__img').setAttribute('src', url);
     miniPhoto.querySelector('.picture__likes').textContent = likes;

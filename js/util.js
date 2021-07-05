@@ -2,14 +2,14 @@ import {cleanseForm} from './upload.js';
 
 const body = document.querySelector('body');
 
-const gettingValue = function(minValue, maxValue) {
+const gettingValue = (minValue, maxValue) => {
   const min = Math.ceil(Math.min(Math.abs(minValue), Math.abs(maxValue)));
   const max = Math.floor(Math.max(Math.abs(minValue), Math.abs(maxValue)));
 
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
-const randomValueNoRepeat = (min, max) => {
+const getRandomValueNoRepeat = (min, max) => {
   const previousValues = [];
 
   return () => {
@@ -25,31 +25,31 @@ const randomValueNoRepeat = (min, max) => {
   };
 };
 
-const randomValueForCommentId = randomValueNoRepeat(1, 25);
-const randomValueForUserId = randomValueNoRepeat(1, 25);
-const randomValueForUserUrl = randomValueNoRepeat(1, 25);
+const randomValueForCommentId = getRandomValueNoRepeat(1, 25);
+const randomValueForUserId = getRandomValueNoRepeat(1, 25);
+const randomValueForUserUrl = getRandomValueNoRepeat(1, 25);
 
 const getRandomArrayElement = (elements) => elements[gettingValue(0, elements.length - 1)];
 
-const openBlock = function(object) {
+const openBlock = (object) => {
   body.classList.add('modal-open');
   object.classList.remove('hidden');
 };
 
-const closeBlock = function(object) {
+const closeBlock = (object) => {
   body.classList.remove('modal-open');
   object.classList.add('hidden');
 };
 
-const setErrorStyle = function(object) {
+const setErrorStyle = (object) => {
   object.style.border = '5px solid rgb(255, 0, 0)';
 };
 
-const removeErrorStyle = function(object) {
+const removeErrorStyle = (object) => {
   object.removeAttribute('style');
 };
 
-const closeByEsc = function(object, field1, field2) {
+const closeByEsc = (object, field1, field2) => {
   window.addEventListener('keydown', (evt) => {
     if (evt.keyCode === 27) {
       if(!(document.activeElement.isEqualNode(field1) || document.activeElement.isEqualNode(field2))) {
@@ -60,22 +60,22 @@ const closeByEsc = function(object, field1, field2) {
   });
 };
 
-const closeByButton = function(button, object) {
+const closeByButton = (button, object) => {
   button.addEventListener('click', () => {
     closeBlock(object);
     cleanseForm();
   });
 };
 
-const addMessage = function(objectAdd) {
+const addMessage = (objectAdd) => {
   body.appendChild(objectAdd);
 };
 
-const removeMessage = function(object) {
+const removeMessage = (object) => {
   body.removeChild(object);
 };
 
-const closeMessage = function(button, object) {
+const closeMessage = (button, object) => {
   button.addEventListener('click', () => {
     removeMessage(object);
   });
@@ -93,12 +93,12 @@ const closeMessage = function(button, object) {
   });
 };
 
-const showMessage = function(objectAdd, button, object) {
+const showMessage = (objectAdd, button, object) => {
   addMessage(objectAdd);
   closeMessage(button, object);
 };
 
-const showServerFailMessage = function(objectAdd, button, object) {
+const showServerFailMessage = (objectAdd, button, object) => {
   addMessage(objectAdd);
   const titleServerFail = document.querySelector('.error__title');
   const buttonServerFail = document.querySelector('.error__button');
@@ -122,3 +122,4 @@ export {addMessage};
 export {removeMessage};
 export {showMessage};
 export {showServerFailMessage};
+

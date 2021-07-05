@@ -13,12 +13,32 @@ const slider = document.querySelector('.effect-level__slider');
 const buttonScalePlus = document.querySelector('.scale__control--bigger');
 const buttonScaleMinus = document.querySelector('.scale__control--smaller');
 const scaleControl = document.querySelector('.scale__control--value');
-const minScaleValue = 25;
-const preMaxScaleValue = 75;
-const maxScaleValue = 100;
-const scaleStep = 25;
+const MIN_SCALE_VALUE = 25;
+const PRE_MAX_SCALE_VALUE = 75;
+const MAX_SCALE_VALUE = 100;
+const SCALE_STEP = 25;
 
-const classRemover = function () {
+const dec = () => {
+  if (parseFloat(scaleControl.getAttribute('value')) > MIN_SCALE_VALUE) {
+    scaleControl.setAttribute('value', `${parseFloat(scaleControl.getAttribute('value')) - SCALE_STEP}%`);
+    buttonScalePlus.removeAttribute('disabled');
+    image.style.transform = `scale(${parseFloat(scaleControl.getAttribute('value'))}%)`;
+  } else if (parseFloat(scaleControl.getAttribute('value')) === MIN_SCALE_VALUE) {
+    buttonScaleMinus.setAttribute('disabled', 'disabled');
+  }
+};
+
+const inc = () => {
+  if (parseFloat(scaleControl.getAttribute('value')) <= PRE_MAX_SCALE_VALUE) {
+    scaleControl.setAttribute('value', `${parseFloat(scaleControl.getAttribute('value')) + SCALE_STEP}%`);
+    buttonScaleMinus.removeAttribute('disabled');
+    image.style.transform = `scale(${parseFloat(scaleControl.getAttribute('value'))}%)`;
+  } else if (parseFloat(scaleControl.getAttribute('value')) === MAX_SCALE_VALUE) {
+    buttonScalePlus.setAttribute('disabled', 'disabled');
+  }
+};
+
+const removeClass = () => {
   image.classList.remove('effects__preview--chrome');
   image.classList.remove('effects__preview--sepia');
   image.classList.remove('effects__preview--marvin');
@@ -26,20 +46,20 @@ const classRemover = function () {
   image.classList.remove('effects__preview--heat');
 };
 
-const cleanseFilter = function() {
+const cleanseFilter = () => {
   sliderBlock.classList.add('hidden');
   image.style.filter = ('');
   sliderValue.setAttribute('value', '');
-  classRemover();
+  removeClass();
 };
 
-const cleanseFiltersBlock = function() {
+const cleanseFiltersBlock = () => {
   cleanseFilter();
   scaleControl.setAttribute('value', '100');
   image.style.transform = 'scale(100%)';
 };
 
-const additionEffect = function() {
+const additionEffect = () => {
   noUiSlider.create(slider, {
     range: {
       min: 0,
@@ -50,7 +70,7 @@ const additionEffect = function() {
     connect: 'lower',
   });
 
-  const changeEffectsIntens = function(effectName, effectConventionalUnit) {
+  const changeEffectsIntens = (effectName, effectConventionalUnit) => {
     slider.noUiSlider.on('update', (_, handle, unencoded) => {
       sliderValue.setAttribute('value', `${unencoded[handle]}`);
       if (effectConventionalUnit) {
@@ -78,7 +98,7 @@ const additionEffect = function() {
       });
       slider.noUiSlider.set(1);
       changeEffectsIntens('grayscale');
-      classRemover();
+      removeClass();
       image.classList.add('effects__preview--chrome');
 
     } else if (effectSepia.checked) {
@@ -92,7 +112,7 @@ const additionEffect = function() {
       });
       slider.noUiSlider.set(1);
       changeEffectsIntens('sepia');
-      classRemover();
+      removeClass();
       image.classList.add('effects__preview--sepia');
 
     } else if (effectMarvin.checked) {
@@ -106,7 +126,7 @@ const additionEffect = function() {
       });
       slider.noUiSlider.set(100);
       changeEffectsIntens('invert', '%');
-      classRemover();
+      removeClass();
       image.classList.add('effects__preview--marvin');
 
     } else if (effectPhobos.checked) {
@@ -120,7 +140,7 @@ const additionEffect = function() {
       });
       slider.noUiSlider.set(3);
       changeEffectsIntens('blur', 'px');
-      classRemover();
+      removeClass();
       image.classList.add('effects__preview--phobos');
 
     } else if (effectHeat.checked) {
@@ -134,34 +154,13 @@ const additionEffect = function() {
       });
       slider.noUiSlider.set(3);
       changeEffectsIntens('brightness');
-      classRemover();
+      removeClass();
       image.classList.add('effects__preview--heat');
     }
   });
 };
 
-const cheangeScale = function() {
-
-  const dec = function() {
-    if (parseFloat(scaleControl.getAttribute('value')) > minScaleValue) {
-      scaleControl.setAttribute('value', `${parseFloat(scaleControl.getAttribute('value')) - scaleStep}%`);
-      buttonScalePlus.removeAttribute('disabled');
-      image.style.transform = `scale(${parseFloat(scaleControl.getAttribute('value'))}%)`;
-    } else if (parseFloat(scaleControl.getAttribute('value')) === minScaleValue) {
-      buttonScaleMinus.setAttribute('disabled', 'disabled');
-    }
-  };
-
-  const inc = function() {
-    if (parseFloat(scaleControl.getAttribute('value')) <= preMaxScaleValue) {
-      scaleControl.setAttribute('value', `${parseFloat(scaleControl.getAttribute('value')) + scaleStep}%`);
-      buttonScaleMinus.removeAttribute('disabled');
-      image.style.transform = `scale(${parseFloat(scaleControl.getAttribute('value'))}%)`;
-    } else if (parseFloat(scaleControl.getAttribute('value')) === maxScaleValue) {
-      buttonScalePlus.setAttribute('disabled', 'disabled');
-    }
-  };
-
+const cheangeScale = () => {
   buttonScaleMinus.addEventListener('click', dec);
 
   buttonScalePlus.addEventListener('click', inc);
@@ -170,3 +169,4 @@ const cheangeScale = function() {
 export{cheangeScale};
 export{additionEffect};
 export {cleanseFiltersBlock};
+export {image};
