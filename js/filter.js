@@ -1,57 +1,52 @@
-
-import {getRandomArrayElement} from './util.js';
+import {showMiniature} from './miniature.js';
 
 const buttonDefault = document.querySelector('#filter-default');
 const buttonRandom = document.querySelector('#filter-random');
 const buttonDiscussed = document.querySelector('#filter-discussed');
 
-const filter = function(userPhotos) {
+const overlayFilter = (userPhotos) => {
+  const userPhotosNewArray = userPhotos.slice();
 
 
-  const removerClass = function() {
+  const removerClass = () => {
     buttonDefault.classList.remove('img-filters__button--active');
     buttonRandom.classList.remove('img-filters__button--active');
     buttonDiscussed.classList.remove('img-filters__button--active');
   };
 
-  const clickDefault = function() {
+  const clickDefault = () => {
     buttonDefault.addEventListener('click', () => {
       removerClass();
       buttonDefault.classList.add('img-filters__button--active');
-
-    }); return userPhotos;
+      showMiniature(userPhotosNewArray);
+    });
   };
 
-  const clickRandom = function() {
+  const clickRandom = () => {
     buttonRandom.addEventListener('click', () => {
       removerClass();
       buttonRandom.classList.add('img-filters__button--active');
-      const userPhotosNew1 = userPhotos.slice();
-      const news = [];
 
-      let count = 0;
-      while (count <= 9) {
-        news.push(getRandomArrayElement(userPhotosNew1));
-        count ++;
-      }
-      userPhotos = news;
+      userPhotos.sort(() => Math.random() - 0.5);
+      const userPhotosMix = userPhotos.slice(0, 9);
+
+      showMiniature(userPhotosMix);
     });
   };
 
-  const clickDiscussed = function() {
+  const clickDiscussed = () => {
     buttonDiscussed.addEventListener('click', () => {
       removerClass();
       buttonDiscussed.classList.add('img-filters__button--active');
-
-      userPhotos.sort( (a, b) => b.comments.length - a.comments.length);
-
+      userPhotos;
+      userPhotos.sort((a, b) => b.comments.length - a.comments.length);
+      showMiniature(userPhotos);
     });
   };
 
-  clickDefault(userPhotos);
-  clickRandom(userPhotos);
-  clickDiscussed(userPhotos);
-
+  clickDefault();
+  clickRandom();
+  clickDiscussed();
 };
 
-export {filter};
+export {overlayFilter};

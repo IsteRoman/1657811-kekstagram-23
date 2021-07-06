@@ -41,6 +41,13 @@ const closeBlock = (object) => {
   object.classList.add('hidden');
 };
 
+const removeElementsByClass = (className) => {
+  const elements = document.getElementsByClassName(className);
+  while(elements.length > 0){
+    elements[0].parentNode.removeChild(elements[0]);
+  }
+};
+
 const setErrorStyle = (object) => {
   object.style.border = '5px solid rgb(255, 0, 0)';
 };
@@ -50,21 +57,25 @@ const removeErrorStyle = (object) => {
 };
 
 const closeByEsc = (object, field1, field2) => {
-  window.addEventListener('keydown', (evt) => {
+  const closeEsc = (evt) => {
     if (evt.keyCode === 27) {
       if(!(document.activeElement.isEqualNode(field1) || document.activeElement.isEqualNode(field2))) {
         closeBlock(object);
         cleanseForm();
+        window.removeEventListener('keydown', closeEsc);
       }
     }
-  });
+  };
+  window.addEventListener('keydown', closeEsc);
 };
 
 const closeByButton = (button, object) => {
-  button.addEventListener('click', () => {
+  const closeButton = () => {
     closeBlock(object);
     cleanseForm();
-  });
+    button.removeEventListener('click', closeButton);
+  };
+  button.addEventListener('click', closeButton);
 };
 
 const addMessage = (objectAdd) => {
@@ -122,4 +133,4 @@ export {addMessage};
 export {removeMessage};
 export {showMessage};
 export {showServerFailMessage};
-
+export {removeElementsByClass};

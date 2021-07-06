@@ -2,6 +2,7 @@ import {showMiniature} from './miniature.js';
 import {openBlock} from './util.js';
 import {closeByEsc} from './util.js';
 import {closeByButton} from './util.js';
+import {overlayFilter} from './filter.js';
 
 
 const bigPicture = document.querySelector('.big-picture');
@@ -75,7 +76,9 @@ const showNewComment = () => {
 
 const browse = (usersPhotos) => {
 
+  overlayFilter(usersPhotos);
   showMiniature(usersPhotos);
+
   const picture = document.querySelectorAll('.picture');
 
   picture.forEach((showBigPictuer, ind) => {
