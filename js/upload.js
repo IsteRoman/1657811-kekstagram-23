@@ -16,8 +16,7 @@ const uploadForm = document.querySelector('.img-upload__form');
 const pictureInput = document.querySelector('.img-upload__input');
 
 const uploadPicture = () => {
-  pictureInput.addEventListener('change', readURL, true);
-  function readURL() {
+  const readURL = () => {
     const file = pictureInput.files[0];
     const reader = new FileReader();
     reader.addEventListener('load', () => {
@@ -28,6 +27,7 @@ const uploadPicture = () => {
       openBlock(imageUpload);
     }
   }
+  pictureInput.addEventListener('change', readURL, true);
 };
 const cleansePicture = () => {
   image.setAttribute('src', 'img/upload-default-image.jpg');

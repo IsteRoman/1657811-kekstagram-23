@@ -32,7 +32,7 @@ const randomValueForUserUrl = getRandomValueNoRepeat(1, 25);
 
 const getRandomArrayElement = (elements) => elements[gettingValue(0, elements.length - 1)];
 
-function debounce (callback) {
+const debounce = (callback) => {
   let timeoutId;
 
   return (...rest) => {
