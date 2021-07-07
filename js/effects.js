@@ -1,3 +1,5 @@
+import './nouislider.js'
+
 const imageBlock = document.querySelector('.img-upload__preview');
 const image = imageBlock.children[0];
 const effectList = document.querySelector('.effects__list');
