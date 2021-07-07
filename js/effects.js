@@ -59,7 +59,7 @@ const cleanseFiltersBlock = () => {
   image.style.transform = 'scale(100%)';
 };
 
-const additionEffect = () => {
+const useEffect = () => {
   noUiSlider.create(slider, {
     range: {
       min: 0,
@@ -167,6 +167,6 @@ const cheangeScale = () => {
 };
 
 export{cheangeScale};
-export{additionEffect};
+export{useEffect};
 export {cleanseFiltersBlock};
 export {image};

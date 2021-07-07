@@ -35,8 +35,8 @@ const checkHashtagsField = () => {
     };
 
     const checkIdentityValues = () => {
-      const toUpper = (x) => x.toUpperCase();
-      const hashtagsArrayUpper = hashtagsArray.map(toUpper);
+      const changeToUpper = (x) => x.toUpperCase();
+      const hashtagsArrayUpper = hashtagsArray.map(changeToUpper);
 
       const valueArr = hashtagsArrayUpper.map((item) => item);
       const isDuplicate = valueArr.some((item, idx) => valueArr.indexOf(item) !== idx);

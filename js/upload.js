@@ -2,7 +2,7 @@ import {openBlock} from './util.js';
 import {closeByEsc} from './util.js';
 import {closeByButton} from './util.js';
 import {cheangeScale} from './effects.js';
-import {additionEffect} from './effects.js';
+import {useEffect} from './effects.js';
 import {cleanseFiltersBlock} from './effects.js';
 import {checkFieldValididy} from './validation.js';
 import {hashtagsField} from './validation.js';
@@ -48,7 +48,7 @@ const uploadImage = () => {
 
   uploadPicture();
   cheangeScale();
-  additionEffect();
+  useEffect();
   checkFieldValididy();
   closeByEsc(imageUpload, hashtagsField, commentField);
   closeByButton(buttonCloseFormUpload, imageUpload);
