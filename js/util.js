@@ -1,6 +1,7 @@
 import {cleanseForm} from './upload.js';
 
 const body = document.querySelector('body');
+const WAITING_TIME = 500;
 
 const gettingValue = (minValue, maxValue) => {
   const min = Math.ceil(Math.min(Math.abs(minValue), Math.abs(maxValue)));
@@ -31,6 +32,15 @@ const randomValueForUserUrl = getRandomValueNoRepeat(1, 25);
 
 const getRandomArrayElement = (elements) => elements[gettingValue(0, elements.length - 1)];
 
+function debounce (callback) {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), WAITING_TIME);
+  };
+}
+
 const openBlock = (object) => {
   body.classList.add('modal-open');
   object.classList.remove('hidden');
@@ -39,6 +49,13 @@ const openBlock = (object) => {
 const closeBlock = (object) => {
   body.classList.remove('modal-open');
   object.classList.add('hidden');
+};
+
+const removeElementsByClass = (className) => {
+  const elements = document.getElementsByClassName(className);
+  while(elements.length > 0){
+    elements[0].parentNode.removeChild(elements[0]);
+  }
 };
 
 const setErrorStyle = (object) => {
@@ -50,21 +67,25 @@ const removeErrorStyle = (object) => {
 };
 
 const closeByEsc = (object, field1, field2) => {
-  window.addEventListener('keydown', (evt) => {
+  const closeEsc = (evt) => {
     if (evt.keyCode === 27) {
       if(!(document.activeElement.isEqualNode(field1) || document.activeElement.isEqualNode(field2))) {
         closeBlock(object);
         cleanseForm();
+        window.removeEventListener('keydown', closeEsc);
       }
     }
-  });
+  };
+  window.addEventListener('keydown', closeEsc);
 };
 
 const closeByButton = (button, object) => {
-  button.addEventListener('click', () => {
+  const closeButton = () => {
     closeBlock(object);
     cleanseForm();
-  });
+    button.removeEventListener('click', closeButton);
+  };
+  button.addEventListener('click', closeButton);
 };
 
 const addMessage = (objectAdd) => {
@@ -122,4 +143,5 @@ export {addMessage};
 export {removeMessage};
 export {showMessage};
 export {showServerFailMessage};
-
+export {removeElementsByClass};
+export {debounce};

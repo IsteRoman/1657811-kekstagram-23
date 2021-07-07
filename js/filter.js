@@ -1,57 +1,59 @@
-
-import {getRandomArrayElement} from './util.js';
+import {showMiniature} from './miniature.js';
+import {debounce} from './util.js';
 
 const buttonDefault = document.querySelector('#filter-default');
 const buttonRandom = document.querySelector('#filter-random');
 const buttonDiscussed = document.querySelector('#filter-discussed');
 
-const filter = function(userPhotos) {
+const overlayFilter = (userPhotos) => {
+  const userPhotosNewArray = userPhotos.slice();
 
-
-  const removerClass = function() {
+  const removerClass = () => {
     buttonDefault.classList.remove('img-filters__button--active');
     buttonRandom.classList.remove('img-filters__button--active');
     buttonDiscussed.classList.remove('img-filters__button--active');
   };
 
-  const clickDefault = function() {
+  const clickDefault = () => {
+    const getDefault = () => {
+      showMiniature(userPhotosNewArray);
+    };
     buttonDefault.addEventListener('click', () => {
       removerClass();
       buttonDefault.classList.add('img-filters__button--active');
-
-    }); return userPhotos;
+    });
+    buttonDefault.addEventListener('click', debounce(getDefault));
   };
 
-  const clickRandom = function() {
+  const clickRandom = () => {
+    const getRandon  = () => {
+      userPhotos.sort(() => Math.random() - 0.5);
+      const userPhotosMix = userPhotos.slice(0, 9);
+      showMiniature(userPhotosMix);
+    };
+
     buttonRandom.addEventListener('click', () => {
       removerClass();
       buttonRandom.classList.add('img-filters__button--active');
-      const userPhotosNew1 = userPhotos.slice();
-      const news = [];
-
-      let count = 0;
-      while (count <= 9) {
-        news.push(getRandomArrayElement(userPhotosNew1));
-        count ++;
-      }
-      userPhotos = news;
     });
+    buttonRandom.addEventListener('click', debounce(getRandon));
   };
 
-  const clickDiscussed = function() {
+  const clickDiscussed = () => {
+    const getDiscussed = function() {
+      userPhotos.sort((a, b) => b.comments.length - a.comments.length);
+      showMiniature(userPhotos);
+    };
     buttonDiscussed.addEventListener('click', () => {
       removerClass();
       buttonDiscussed.classList.add('img-filters__button--active');
-
-      userPhotos.sort( (a, b) => b.comments.length - a.comments.length);
-
     });
+    buttonDiscussed.addEventListener('click', debounce(getDiscussed));
   };
 
-  clickDefault(userPhotos);
-  clickRandom(userPhotos);
-  clickDiscussed(userPhotos);
-
+  clickDefault();
+  clickRandom();
+  clickDiscussed();
 };
 
-export {filter};
+export {overlayFilter};
