@@ -1,4 +1,4 @@
-import './nouislider.js'
+import './nouislider.js';
 
 const imageBlock = document.querySelector('.img-upload__preview');
 const image = imageBlock.children[0];
@@ -20,7 +20,7 @@ const PRE_MAX_SCALE_VALUE = 75;
 const MAX_SCALE_VALUE = 100;
 const SCALE_STEP = 25;
 
-const dec = () => {
+const onDec = () => {
   if (parseFloat(scaleControl.getAttribute('value')) > MIN_SCALE_VALUE) {
     scaleControl.setAttribute('value', `${parseFloat(scaleControl.getAttribute('value')) - SCALE_STEP}%`);
     buttonScalePlus.removeAttribute('disabled');
@@ -30,7 +30,7 @@ const dec = () => {
   }
 };
 
-const inc = () => {
+const onInc = () => {
   if (parseFloat(scaleControl.getAttribute('value')) <= PRE_MAX_SCALE_VALUE) {
     scaleControl.setAttribute('value', `${parseFloat(scaleControl.getAttribute('value')) + SCALE_STEP}%`);
     buttonScaleMinus.removeAttribute('disabled');
@@ -163,9 +163,9 @@ const useEffect = () => {
 };
 
 const cheangeScale = () => {
-  buttonScaleMinus.addEventListener('click', dec);
+  buttonScaleMinus.addEventListener('click', onDec);
 
-  buttonScalePlus.addEventListener('click', inc);
+  buttonScalePlus.addEventListener('click', onInc);
 };
 
 export{cheangeScale};

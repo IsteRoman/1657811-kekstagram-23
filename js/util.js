@@ -1,7 +1,7 @@
 import {cleanseForm} from './upload.js';
 
-const body = document.querySelector('body');
 const WAITING_TIME = 500;
+const body = document.querySelector('body');
 
 const debounce = (callback) => {
   let timeoutId;
@@ -10,7 +10,7 @@ const debounce = (callback) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback.apply(this, rest), WAITING_TIME);
   };
-}
+};
 
 const openBlock = (object) => {
   body.classList.add('modal-open');
@@ -38,25 +38,25 @@ const removeErrorStyle = (object) => {
 };
 
 const closeByEsc = (object, field1, field2) => {
-  const closeEsc = (evt) => {
+  const onCloseByEsc = (evt) => {
     if (evt.keyCode === 27) {
       if(!(document.activeElement.isEqualNode(field1) || document.activeElement.isEqualNode(field2))) {
         closeBlock(object);
         cleanseForm();
-        window.removeEventListener('keydown', closeEsc);
+
       }
     }
   };
-  window.addEventListener('keydown', closeEsc);
+  window.addEventListener('keydown', onCloseByEsc);
 };
 
 const closeByButton = (button, object) => {
-  const closeButton = () => {
+  const onCloseByButton = () => {
     closeBlock(object);
     cleanseForm();
-    button.removeEventListener('click', closeButton);
+    button.removeEventListener('click', onCloseByButton);
   };
-  button.addEventListener('click', closeButton);
+  button.addEventListener('click', onCloseByButton);
 };
 
 const addMessage = (objectAdd) => {

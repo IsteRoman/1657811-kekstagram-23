@@ -3,12 +3,12 @@ import {openBlock} from './util.js';
 import {closeByEsc} from './util.js';
 import {closeByButton} from './util.js';
 
+const NUMBER_COMMENT_SHOW = 5;
 const bigPicture = document.querySelector('.big-picture');
 const closeBigPicture = document.querySelector('.big-picture__cancel');
 const commentsCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 const commentBlock = document.querySelector('.social__comments');
-const NUMBER_COMMENT_SHOW = 5;
 const commentField = document.querySelector('.social__footer-text');
 
 const getComment = (usersPhotos, index) => {
