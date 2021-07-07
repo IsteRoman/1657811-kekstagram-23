@@ -27,12 +27,12 @@ const getData = (onSuccess) => {
       onSuccess(usersPhotos);
     })
     .catch(() => {
-      showServerFailMessage(errorTemplate, errorButton, errorSection);
+      showServerFailMessage(errorButton, errorSection);
     });
 };
 
 const sentData = (bodyObject, closeObject) => {
-  addMessage(loadingTemplate);
+  addMessage(loadingSection);
   fetch(
     'https://23.javascript.pages.academy/kekstagram',
     {
@@ -45,15 +45,15 @@ const sentData = (bodyObject, closeObject) => {
         removeMessage(loadingSection);
         closeBlock(closeObject);
         cleanseForm();
-        showMessage(successTemplate, successButton, successSection);
+        showMessage(successButton, successSection);
       } else {
         removeMessage(loadingSection);
-        showMessage(errorTemplate, errorButton, errorSection);
+        showMessage(errorButton, errorSection);
       }
     })
     .catch(() => {
       removeMessage(loadingSection);
-      showMessage(errorTemplate, errorButton, errorSection);
+      showMessage(errorButton, errorSection);
     });
 };
 

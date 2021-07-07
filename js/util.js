@@ -43,7 +43,6 @@ const closeByEsc = (object, field1, field2) => {
       if(!(document.activeElement.isEqualNode(field1) || document.activeElement.isEqualNode(field2))) {
         closeBlock(object);
         cleanseForm();
-
       }
     }
   };
@@ -54,17 +53,18 @@ const closeByButton = (button, object) => {
   const onCloseByButton = () => {
     closeBlock(object);
     cleanseForm();
-    button.removeEventListener('click', onCloseByButton);
   };
   button.addEventListener('click', onCloseByButton);
 };
 
-const addMessage = (objectAdd) => {
-  body.appendChild(objectAdd);
+const addMessage = (object) => {
+  body.appendChild(object);
 };
 
 const removeMessage = (object) => {
-  body.removeChild(object);
+  if (body.contains(object)) {
+    body.removeChild(object);
+  }
 };
 
 const closeMessage = (button, object) => {
@@ -79,19 +79,19 @@ const closeMessage = (button, object) => {
   });
 
   window.addEventListener('click', () => {
-    if (!(document.activeElement.isEqualNode(object))) {
+    if (!(document.activeElement.isEqualNode(object)) && !(document.activeElement.isEqualNode(button))) {
       removeMessage(object);
     }
   });
 };
 
-const showMessage = (objectAdd, button, object) => {
-  addMessage(objectAdd);
+const showMessage = (button, object) => {
+  addMessage(object);
   closeMessage(button, object);
 };
 
-const showServerFailMessage = (objectAdd, button, object) => {
-  addMessage(objectAdd);
+const showServerFailMessage = (button, object) => {
+  addMessage(object);
   const titleServerFail = document.querySelector('.error__title');
   const buttonServerFail = document.querySelector('.error__button');
   titleServerFail.textContent = 'Неполадки на сервере';
