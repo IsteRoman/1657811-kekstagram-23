@@ -2,8 +2,6 @@ import {showMiniature} from './miniature.js';
 import {openBlock} from './util.js';
 import {closeByEsc} from './util.js';
 import {closeByButton} from './util.js';
-import {overlayFilter} from './filter.js';
-
 
 const bigPicture = document.querySelector('.big-picture');
 const closeBigPicture = document.querySelector('.big-picture__cancel');
@@ -61,7 +59,6 @@ const showNewComment = () => {
   commentsLoader.addEventListener('click', () => {
     const visible = commentBlock.querySelectorAll('.visible');
     let next = visible[visible.length-1].nextElementSibling;
-
     for (let f = 0; f < NUMBER_COMMENT_SHOW; f++) {
       if( next ) {
         next.classList.add('visible');
@@ -76,7 +73,6 @@ const showNewComment = () => {
 
 const browse = (usersPhotos) => {
 
-  overlayFilter(usersPhotos);
   showMiniature(usersPhotos);
 
   const picture = document.querySelectorAll('.picture');
@@ -108,7 +104,9 @@ const browse = (usersPhotos) => {
     };
     showBigPictuer.addEventListener('click', openBigPicture.bind(showBigPictuer, ind));
   });
-  showNewComment();
 };
 
+showNewComment();
+
 export {browse};
+export {showNewComment};

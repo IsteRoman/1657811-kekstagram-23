@@ -1,11 +1,13 @@
-import {showMiniature} from './miniature.js';
 import {debounce} from './util.js';
+import { browse } from './watch.js';
 
 const buttonDefault = document.querySelector('#filter-default');
 const buttonRandom = document.querySelector('#filter-random');
 const buttonDiscussed = document.querySelector('#filter-discussed');
 
 const overlayFilter = (userPhotos) => {
+  browse(userPhotos);
+
   const userPhotosNewArray = userPhotos.slice();
 
   const removerClass = () => {
@@ -16,7 +18,7 @@ const overlayFilter = (userPhotos) => {
 
   const clickDefault = () => {
     const getDefault = () => {
-      showMiniature(userPhotosNewArray);
+      browse(userPhotosNewArray);
     };
     buttonDefault.addEventListener('click', () => {
       removerClass();
@@ -29,7 +31,7 @@ const overlayFilter = (userPhotos) => {
     const getRandon  = () => {
       userPhotos.sort(() => Math.random() - 0.5);
       const userPhotosMix = userPhotos.slice(0, 9);
-      showMiniature(userPhotosMix);
+      browse(userPhotosMix);
     };
 
     buttonRandom.addEventListener('click', () => {
@@ -42,7 +44,7 @@ const overlayFilter = (userPhotos) => {
   const clickDiscussed = () => {
     const getDiscussed = function() {
       userPhotos.sort((a, b) => b.comments.length - a.comments.length);
-      showMiniature(userPhotos);
+      browse(userPhotos);
     };
     buttonDiscussed.addEventListener('click', () => {
       removerClass();
