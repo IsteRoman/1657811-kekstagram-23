@@ -3,35 +3,6 @@ import {cleanseForm} from './upload.js';
 const body = document.querySelector('body');
 const WAITING_TIME = 500;
 
-const gettingValue = (minValue, maxValue) => {
-  const min = Math.ceil(Math.min(Math.abs(minValue), Math.abs(maxValue)));
-  const max = Math.floor(Math.max(Math.abs(minValue), Math.abs(maxValue)));
-
-  return Math.floor(Math.random() * (max - min + 1) + min);
-};
-
-const getRandomValueNoRepeat = (min, max) => {
-  const previousValues = [];
-
-  return () => {
-    let currentValue = gettingValue(min, max);
-    if (previousValues.length >= (max - min + 1)) {
-      throw new Error(`Перебраны все числа из диапазона от ${min} до ${max}`);
-    }
-    while (previousValues.includes(currentValue)) {
-      currentValue = gettingValue(min, max);
-    }
-    previousValues.push(currentValue);
-    return currentValue;
-  };
-};
-
-const randomValueForCommentId = getRandomValueNoRepeat(1, 25);
-const randomValueForUserId = getRandomValueNoRepeat(1, 25);
-const randomValueForUserUrl = getRandomValueNoRepeat(1, 25);
-
-const getRandomArrayElement = (elements) => elements[gettingValue(0, elements.length - 1)];
-
 const debounce = (callback) => {
   let timeoutId;
 
@@ -128,11 +99,6 @@ const showServerFailMessage = (objectAdd, button, object) => {
   closeMessage(button, object);
 };
 
-export {gettingValue};
-export {randomValueForCommentId};
-export {randomValueForUserId};
-export {randomValueForUserUrl};
-export {getRandomArrayElement};
 export {openBlock};
 export {closeByEsc};
 export {closeByButton};
