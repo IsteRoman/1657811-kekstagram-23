@@ -1,5 +1,9 @@
 import './nouislider.js';
 
+const MIN_SCALE_VALUE = 25;
+const PRE_MAX_SCALE_VALUE = 75;
+const MAX_SCALE_VALUE = 100;
+const SCALE_STEP = 25;
 const imageBlock = document.querySelector('.img-upload__preview');
 const image = imageBlock.children[0];
 const effectList = document.querySelector('.effects__list');
@@ -15,10 +19,6 @@ const slider = document.querySelector('.effect-level__slider');
 const buttonScalePlus = document.querySelector('.scale__control--bigger');
 const buttonScaleMinus = document.querySelector('.scale__control--smaller');
 const scaleControl = document.querySelector('.scale__control--value');
-const MIN_SCALE_VALUE = 25;
-const PRE_MAX_SCALE_VALUE = 75;
-const MAX_SCALE_VALUE = 100;
-const SCALE_STEP = 25;
 
 const onDec = () => {
   if (parseFloat(scaleControl.getAttribute('value')) > MIN_SCALE_VALUE) {

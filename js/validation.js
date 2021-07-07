@@ -1,13 +1,13 @@
 import {setErrorStyle} from './util.js';
 import {removeErrorStyle} from './util.js';
 
+const MAX_HASHTAGS_NUMBER = 5;
+const MAX_COMMENT_LENGTH = 140;
+const ZERO_VALUE = 0;
 const hashtagsField = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
 const submitButton = document.querySelector('.img-upload__submit');
-const MAX_HASHTAGS_NUMBER = 5;
-const MAX_COMMENT_LENGTH = 140;
 const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
-const ZERO_VALUE = 0;
 
 const checkHashtagsField = () => {
 
